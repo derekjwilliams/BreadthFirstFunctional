@@ -1,0 +1,35 @@
+{
+  "name": "@derekjwilliams/breadth_first_functional",
+  "version": "1.0.0",
+  "description": "Breadth First Graph Algorithm",
+  "main": "breadth_first_functional",
+  "type": "module",
+  "scripts": {
+    "test": "mocha tests/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/derekjwilliams/BreadthFirstFunctional.git"
+  },
+  "keywords": [
+    "Graph",
+    "Algorithms",
+    "Functional"
+  ],
+  "author": "Derek Williams",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/derekjwilliams/BreadthFirstFunctional/issues"
+  },
+  "homepage": "https://github.com/derekjwilliams/BreadthFirstFunctional#readme",
+  "devDependencies": {
+    "@types/mocha": "^10.0.1"
+  },
+  "dependencies": {
+    "@derekjwilliams/linkedstack": "^1.0.0",
+    "bitset": "^5.1.1",
+    "chai": "^4.3.7",
+    "datastructures-js": "^12.0.0",
+    "mocha": "^10.2.0"
+  }
+}
