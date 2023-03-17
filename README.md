@@ -14,7 +14,6 @@ Run the tests with `npm test`
 
 ### Simple Graph For Tests
 
-![](https://github.com/derekjwilliams/BreadthFirstFunctional/blob/main/BreadthFirstModerateDiagram.svg)
 
 ```mermaid
 graph TD;
@@ -34,3 +33,5 @@ v1<-->v10;
 v10<-->v9;
 v9<-->v8;
 ```
+
+![](https://github.com/derekjwilliams/BreadthFirstFunctional/blob/main/BreadthFirstModerateDiagram.svg)
