@@ -34,4 +34,6 @@ v10<-->v9;
 v9<-->v8;
 ```
 
+<summary>Diagram created with mermaid cli, click to show</summary>
+  
 ![](https://github.com/derekjwilliams/BreadthFirstFunctional/blob/main/BreadthFirstModerateDiagram.svg)
