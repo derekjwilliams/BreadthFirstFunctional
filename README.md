@@ -11,9 +11,10 @@ Run the tests with `npm test`
 
 ### Simple Graph For Tests
 
-https://github.com/derekjwilliams/DepthFirstFunctional/blob/main/DepthFirstSimpleDiagram.png
+![](https://github.com/derekjwilliams/DepthFirstFunctional/blob/main/DepthFirstSimpleDiagram.png)
 
 
 ### More Complex For Tests
 
-https://github.com/derekjwilliams/DepthFirstFunctional/blob/main/DepthFirstModerateDiagram.svg
+![](https://github.com/derekjwilliams/DepthFirstFunctional/blob/main/DepthFirstModerateDiagram.svg)
+
