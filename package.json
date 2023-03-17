@@ -1,6 +1,6 @@
 {
   "name": "@derekjwilliams/breadth_first_functional",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Breadth First Graph Algorithm",
   "main": "breadth_first_functional",
   "type": "module",

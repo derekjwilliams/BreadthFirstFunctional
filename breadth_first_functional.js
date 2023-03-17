@@ -4,7 +4,8 @@
 
 /* simple JS implementation first, with functional stack implementation */
 import { stackPeek, stackPop, stackPush, stackGetIterator } from "@derekjwilliams/linkedstack"
-import { Deque } from 'datastructures-js';import BitSet from "bitset"
+import { Deque } from 'datastructures-js'
+import BitSet from "bitset"
 
 function Edge(from, to, cost) {
 	this.from = from
@@ -51,10 +52,11 @@ export class BreadthFirstSearchAdjacencyListIterative {
    */
   breadthFirstSearch(start) {
     this.#previousValues = new Array(this.#n_size)
-    const visited = new Array(this.#n_size)
+    let visited = new BitSet
+
     const deque = new Deque();
     deque.pushBack(start) // same as offer (offerLast) in Java ArrayDeque, push to end/back of Deque
-    visited[start] = true;
+    visited.set(start, 1)
     console.log('start value: ', JSON.stringify(start))
     console.log('deque value: ', JSON.stringify(deque))
     console.log('deque.back value: ', JSON.stringify(deque.back[0]))
@@ -71,8 +73,8 @@ export class BreadthFirstSearchAdjacencyListIterative {
       // Loop through all edges attached to this node. Mark nodes as visited once they're
       // in the queue. This will prevent having duplicate nodes in the queue and speedup the BFS.
       edges.forEach((edge) => {
-        if (!visited[edge.to]) {
-          visited[edge.to] = true
+        if (!visited.get(edge.to)) {
+          visited.set(edge.to, 1)
           this.#previousValues[edge.to] = node
           deque.pushBack(edge.to)
         }
@@ -128,4 +130,3 @@ export class BreadthFirstSearchAdjacencyListIterative {
     BreadthFirstSearchAdjacencyListIterative.addUndirectedEdge(graph, from, to, 1);
   }
 } 
-  
