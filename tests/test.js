@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import { Deque } from 'datastructures-js'
-import { BreadthFirstSearchAdjacencyListIterative } from '../breadth_first_functional.js'
+import { addUnweightedUndirectedEdges, createEmptyGraph, reconstructPath } from '../breadth_first_functional.js'
 
 describe('Breadth First Simple', function () {
   describe('constructor', () => {
@@ -37,28 +37,30 @@ describe('Breadth First Simple', function () {
   describe('pushBack', () => {
     it('add elements at the back', () => {
       const n = 13
-      let graph = BreadthFirstSearchAdjacencyListIterative.createEmptyGraph(n)
-      BreadthFirstSearchAdjacencyListIterative.addUnweightedUndirectedEdge(graph, 0, 7)
-      console.log(JSON.stringify(graph))
-      BreadthFirstSearchAdjacencyListIterative.addUnweightedUndirectedEdge(graph, 0, 9)
-      BreadthFirstSearchAdjacencyListIterative.addUnweightedUndirectedEdge(graph, 0, 11)
-      BreadthFirstSearchAdjacencyListIterative.addUnweightedUndirectedEdge(graph, 7, 11)
-      BreadthFirstSearchAdjacencyListIterative.addUnweightedUndirectedEdge(graph, 7, 6)
-      BreadthFirstSearchAdjacencyListIterative.addUnweightedUndirectedEdge(graph, 7, 3)
-      BreadthFirstSearchAdjacencyListIterative.addUnweightedUndirectedEdge(graph, 6, 5)
-      BreadthFirstSearchAdjacencyListIterative.addUnweightedUndirectedEdge(graph, 3, 4)
-      BreadthFirstSearchAdjacencyListIterative.addUnweightedUndirectedEdge(graph, 2, 3)
-      BreadthFirstSearchAdjacencyListIterative.addUnweightedUndirectedEdge(graph, 2, 12)
-      BreadthFirstSearchAdjacencyListIterative.addUnweightedUndirectedEdge(graph, 12, 8)
-      BreadthFirstSearchAdjacencyListIterative.addUnweightedUndirectedEdge(graph, 8, 1)
-      BreadthFirstSearchAdjacencyListIterative.addUnweightedUndirectedEdge(graph, 1, 10)
-      BreadthFirstSearchAdjacencyListIterative.addUnweightedUndirectedEdge(graph, 10, 9)
-      BreadthFirstSearchAdjacencyListIterative.addUnweightedUndirectedEdge(graph, 9, 8)
-
-      const solver = new BreadthFirstSearchAdjacencyListIterative(graph)
-      let start = 10
-      let end = 5
-      let path = solver.reconstructPath(start, end)
+      let graph = createEmptyGraph(n)
+      addUnweightedUndirectedEdges(graph, 
+        [
+          [0,7],
+          [0, 9],
+          [0, 11],
+          [7, 11],
+          [7, 6],
+          [7, 3],
+          [6, 5],
+          [3, 4],
+          [2, 3],
+          [2, 12],
+          [12, 8],
+          [8, 1],
+          [1, 10],
+          [10, 9],
+          [9, 8]
+        ]
+      )
+      const start = 10
+      const end = 5
+      let previousValues = new Array(graph.length);
+      let path = reconstructPath(graph, start, end, previousValues)
     })
   })
 })

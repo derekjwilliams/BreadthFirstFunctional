@@ -1,9 +1,9 @@
 // perform a breadth first search using adjacency list input and vertex to find
-// see https://youtu.be/09_LlHjoEiY?t=1400s
+// see https://youtu.be/09_LlHjoEiY
 // github for the tutorial https://github.com/williamfiset/algorithms
+// Java implementation from the github https://github.com/williamfiset/Algorithms/blob/master/src/main/java/com/williamfiset/algorithms/graphtheory/DepthFirstSearchAdjacencyListIterativeFastStack.java
 
 /* simple JS implementation first, with functional stack implementation */
-import { stackPeek, stackPop, stackPush, stackGetIterator } from "@derekjwilliams/linkedstack"
 import { Deque } from 'datastructures-js'
 import BitSet from "bitset"
 
@@ -13,120 +13,88 @@ function Edge(from, to, cost) {
 	this.cost = cost
 }
 
-//Class implemenation to make initial translation from Java a bit less painful
-
-export class BreadthFirstSearchAdjacencyListIterative {
-  //int
-  #n_size
-  //array of integers
-  #previousValues
-  // Array<Array<Edge>>
-  #graph = new Array()
-
-  /**
-   * 
-   * @param {Array<Array<Edge>>} graph 
-   */
-  constructor(graph) {
-    this.#n_size = graph.length;
-    this.#graph = graph; //TODO copy the graph instead of assigning
+export function reconstructPath(graph, start, end, previousValues) {
+  breadthFirstSearch(graph, previousValues, start)
+  let path = new Array()
+  for (let at = end; at != null; at = previousValues[at]) {
+    path.push(at);
   }
+  path.reverse()
+  if (path[0] == start) {
+    return path; // if everything is correct?
+  }
+  path.length = 0;// clear the array
+  return path;
+}
+
+
+/**
+ * 
+ * @param {number} start 
+ */
+export function breadthFirstSearch(graph, previousValues, start) {
   
-  reconstructPath(start, end) {
-    this.breadthFirstSearch(start)
-    let path = new Array()
-    for (let at = end; at != null; at = this.#previousValues[at]) {
-      path.push(at);
-    }
-    path.reverse()
-    if (path[0] == start) {
-      return path; // if everything is correct?
-    }
-    path.length = 0;// clear the array
-    return path;
+  previousValues = new Array(graph.length)
+  let visited = new BitSet
+
+  const deque = new Deque();
+  deque.pushBack(start) // same as offer (offerLast) in Java ArrayDeque, push to end/back of Deque
+  visited.set(start, 1)
+
+  while(!deque.isEmpty()) {
+    const vertex = deque.popFront() // same as poll in Java ArrayDeque, dequeues element from front of queue
+
+    const edges = graph[+vertex]
+
+    // Loop through all edges attached to this vertex. Mark vertices as visited once they're
+    // in the queue. This will prevent having duplicate vertices in the queue and speedup the BFS.
+    edges.forEach(edge => {
+      if (!visited.get(edge.to)) {
+        visited.set(edge.to, 1)
+        previousValues[edge.to] = vertex
+        deque.pushBack(edge.to)
+      }
+    })
   }
+}
 
-  /**
-   * 
-   * @param {number} start 
-   */
-  breadthFirstSearch(start) {
-    this.#previousValues = new Array(this.#n_size)
-    let visited = new BitSet
+/**
+ * Create an empty graph, an array of arrays
+ * @param {number} n number of vertices in empty graph 
+ * @returns {Array<Array<Edge>>}
+ */
+export function createEmptyGraph(n) {
+  return Array(n).fill(null).map(_ => new Array());
+}
 
-    const deque = new Deque();
-    deque.pushBack(start) // same as offer (offerLast) in Java ArrayDeque, push to end/back of Deque
-    visited.set(start, 1)
-    console.log('start value: ', JSON.stringify(start))
-    console.log('deque value: ', JSON.stringify(deque))
-    console.log('deque.back value: ', JSON.stringify(deque.back[0]))
-    console.log('deque.front value: ', JSON.stringify(deque.front))
-    // deque.back
-    
+/**
+ * Add an undirected edge between vertex 1 and 2, i.e. both directions
+ * @param {Array<Array<Edge>>} graph
+ * @param {number} u vertex 1 
+ * @param {number} v vertex 2
+ * @param {number} cost 
+ */
+function addUndirectedEdge(graph, u, v, cost) {
+  graph[+u].push(new Edge(u, v, cost))
+  graph[+v].push(new Edge(v, u, cost))
+}
 
-    while(!deque.isEmpty()) {
-     const node = deque.popFront() // same as poll in Java ArrayDeque, dequeues element from front of queue
+// Add an undirected unweighted edge between two verices 'u' and 'v'. The edge added
+// will have a weight of 1 since it is intended to be unweighted.
+/**
+ * 
+ * @param {Array<Array<Edge>>} graph
+ * @param {number} u vertex 1 
+ * @param {number} v vertex 2 
+ */
+export function addUnweightedUndirectedEdge(graph, u, v) {
+  graph[+u].push(new Edge(u, v, 1))
+  graph[+v].push(new Edge(v, u, 1))
+}
 
-      console.log('node value: ', JSON.stringify(node))
-      const edges = this.#graph[+node]
+export function addUnweightedUndirectedEdges(graph, edges) {
+  edges.forEach((edge) => {
+    addUnweightedUndirectedEdge(graph, edge[0], edge[1])
+  })
+}
 
-      // Loop through all edges attached to this node. Mark nodes as visited once they're
-      // in the queue. This will prevent having duplicate nodes in the queue and speedup the BFS.
-      edges.forEach((edge) => {
-        if (!visited.get(edge.to)) {
-          visited.set(edge.to, 1)
-          this.#previousValues[edge.to] = node
-          deque.pushBack(edge.to)
-        }
-      })
-    }
-  }
-
-  /**
-   * 
-   * @param {number} n number of nodes in empty graph 
-   * @returns {Array<Array<Edge>>}
-   */
-  static createEmptyGraph(n) {
-    const graph = new Array();
-    for (let i = 0; i < n; i++) {
-      graph.push(new Array()) // graph is an Array of Array of Edges
-    }
-    return graph;
-  }
-  /**
-   * Add directed edge to graph
-   * @param {Array<Array<Edge>>} graph 
-   * @param {number} from 
-   * @param {number} to 
-   * @param {number} cost 
-  */
-
-  static addDirectedEdge(graph, from, to, cost) {
-    graph[+from].push(new Edge(from, to, cost))
-  }
-
-  /**
-   * Add an undirected edge between nodes 'from' and 'to'.
-   * @param {Array<Array<Edge>>} graph
-   * @param {number} from 
-   * @param {number} to 
-   * @param {number} cost 
-   */
-  static addUndirectedEdge(graph, from, to, cost) {
-    BreadthFirstSearchAdjacencyListIterative.addDirectedEdge(graph, from, to, cost);
-    BreadthFirstSearchAdjacencyListIterative.addDirectedEdge(graph, to, from, cost);
-  }
-
-  // Add an undirected unweighted edge between nodes 'u' and 'v'. The edge added
-  // will have a weight of 1 since its intended to be unweighted.
-  /**
-   * 
-   * @param {Array<Array<Edge>>} graph
-   * @param {number} from 
-   * @param {number} to 
-   */
-  static  addUnweightedUndirectedEdge(graph, from, to) {
-    BreadthFirstSearchAdjacencyListIterative.addUndirectedEdge(graph, from, to, 1);
-  }
-} 

@@ -1,6 +1,9 @@
 # BreadthFirstFunctional
-Simple breadth first graph search using adjacency list
+Simple breadth first graph search using adjacency list.
 
+See https://youtu.be/09_LlHjoEiY that covers this topic
+Github for the tutorial https://github.com/williamfiset/algorithms
+Java implemenation from the github https://github.com/williamfiset/Algorithms/blob/master/src/main/java/com/williamfiset/algorithms/graphtheory/BreadthFirstSearchAdjacencyListIterative.java
 ## TODO
 
 Convert to actually be functional
@@ -11,10 +14,23 @@ Run the tests with `npm test`
 
 ### Simple Graph For Tests
 
-![](https://github.com/derekjwilliams/DepthFirstFunctional/blob/main/DepthFirstSimpleDiagram.svg)
+![](https://github.com/derekjwilliams/BreadthFirstFunctional/blob/main/BreadthFirstModerateDiagram.svg)
 
-
-### More Complex For Tests
-
-![](https://github.com/derekjwilliams/DepthFirstFunctional/blob/main/DepthFirstModerateDiagram.svg)
-
+```mermaid
+graph TD;
+v0<-->v7;
+v0<-->v9;
+v0<-->v11;
+v7<-->v11;
+v7<-->v6;
+v7<-->v3;
+v6<-->v5;
+v3<-->v4;
+v2<-->v3;
+v2<-->v12;
+v12<-->v8;
+v8<-->v1;
+v1<-->v10;
+v10<-->v9;
+v9<-->v8;
+```
