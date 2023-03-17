@@ -36,4 +36,7 @@ v9<-->v8;
 
 <summary>Diagram created with mermaid cli, click to show</summary>
   
+### Generated Mermaid Diagram (using CLI)
 ![](https://github.com/derekjwilliams/BreadthFirstFunctional/blob/main/BreadthFirstModerateDiagram.svg)
+
+`silly mermaid cli`
